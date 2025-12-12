@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Pro Deals - Best Supplements & Gear</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0f172a',
+                            primary: '#ff3366',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col font-sans">
+
+    <!-- Header -->
+    <header class="bg-slate-900 text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <!-- Simple Dumbbell Icon SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-pink-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6.5 6.5 11 11"/><path d="m21 21-1-1"/><path d="m3 3 1 1"/><path d="m18 22 4-4"/><path d="m2 6 4-4"/><path d="m3 10 7-7"/><path d="m14 21 7-7"/></svg>
+                <h1 class="text-2xl font-bold tracking-tight">Gym Pro <span class="text-pink-500">Deals</span></h1>
+            </div>
+            <button class="bg-pink-500 hover:bg-pink-600 text-white px-5 py-2 rounded-full font-bold transition-colors text-sm">
+                Get Alerts
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-slate-800 text-white py-16 text-center px-4">
+        <h2 class="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">Best Deals on Gym <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-500">Supplements & Gear</span></h2>
+        <p class="text-slate-400 text-lg max-w-2xl mx-auto">We track prices across Amazon, Flipkart, and more so you never overpay for your gains.</p>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12 flex-grow">
+        
+        <div id="status-message" class="text-center py-10 hidden">
+            <!-- Dynamic Status Content -->
+        </div>
+
+        <div id="deals-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Deals will be injected here -->
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-8 text-center border-t border-slate-800">
+        <p>&copy; 2025 Gym Pro Deals. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const API_URL = 'https://prodeals-api.onrender.com/api/deals/gym';
+        const grid = document.getElementById('deals-grid');
+        const statusMsg = document.getElementById('status-message');
+
+        function showLoading() {
+            statusMsg.innerHTML = '<div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-pink-500"></div><p class="mt-2 text-gray-500 font-medium">Finding best deals...</p>';
+            statusMsg.classList.remove('hidden');
+            grid.innerHTML = '';
+        }
+
+        function showError(msg) {
+            statusMsg.innerHTML = `<p class="text-red-500 font-bold text-lg">😕 ${msg}</p><button onclick="fetchDeals()" class="mt-4 text-blue-500 underline">Try Again</button>`;
+            statusMsg.classList.remove('hidden');
+        }
+
+        function createCard(deal) {
+            // Safe URL handling
+            let safeProductUrl = deal.product_url || '#';
+            if (!safeProductUrl.startsWith('http')) safeProductUrl = 'https://' + safeProductUrl;
+
+            // Image handling (using proxy to safe-guard broken/blocked images)
+            const rawImg = deal.image_url || 'https://placehold.co/400x400?text=No+Image';
+            const displayImg = `https://wsrv.nl/?url=${encodeURIComponent(rawImg)}&w=400&h=400&fit=contain&output=webp`;
+
+            return `
+                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100 flex flex-col h-full group">
+                    <div class="relative h-48 p-4 bg-white flex items-center justify-center">
+                        <img src="${displayImg}" alt="${deal.title}" class="object-contain h-full w-full group-hover:scale-105 transition-transform duration-300" 
+                             onerror="this.src='https://placehold.co/400x400?text=No+Image'">
+                        ${deal.discount ? `<span class="absolute top-2 right-2 bg-pink-500 text-white text-xs font-bold px-2 py-1 rounded-full">-${deal.discount}%</span>` : ''}
+                    </div>
+                    <div class="p-4 flex flex-col flex-grow">
+                        <div class="mb-2">
+                             <span class="bg-gray-100 text-gray-600 text-xs font-bold px-2 py-1 rounded uppercase">${deal.store_name || 'Deal'}</span>
+                        </div>
+                        <h3 class="font-bold text-gray-900 text-sm line-clamp-2 mb-2 min-h-[40px]" title="${deal.title}">${deal.title}</h3>
+                        
+                        <div class="mt-auto pt-2">
+                             <div class="flex items-baseline gap-2 mb-3">
+                                <span class="text-xl font-bold text-green-600">₹${deal.price}</span>
+                             </div>
+                             <a href="${safeProductUrl}" target="_blank" rel="noopener noreferrer" 
+                                class="block w-full text-center bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 rounded-lg transition-colors text-sm">
+                                View Deal
+                             </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function fetchDeals() {
+            showLoading();
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) throw new Error('Failed to fetch deals');
+                
+                const data = await response.json();
+                
+                if (!data || data.length === 0) {
+                    showError('No deals found right now. Check back later!');
+                    return;
+                }
+
+                statusMsg.classList.add('hidden');
+                
+                // Render products
+                grid.innerHTML = data.map(deal => createCard(deal)).join('');
+
+            } catch (error) {
+                console.error('Error:', error);
+                showError('Could not load deals. Please check your connection.');
+            }
+        }
+
+        // Initialize
+        fetchDeals();
+    </script>
+</body>
+</html>
