@@ -7,6 +7,11 @@ export default function Footer() {
                     <p className="text-sm">
                         The smartest way to find the best deals on supplements across India's top stores.
                     </p>
+                    <div className="mt-4 p-3 bg-gray-900 rounded-lg border border-gray-800">
+                        <p className="text-xs text-gray-400 italic">
+                            GymProDeals uses affiliate links. We may earn a commission at no extra cost to users.
+                        </p>
+                    </div>
                 </div>
 
                 <div>
