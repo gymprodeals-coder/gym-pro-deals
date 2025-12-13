@@ -1,8 +1,12 @@
 from fastapi import FastAPI
-from app.scrapers.manager import run_category_scrapers, get_loaded_scraper_names
 from fastapi.middleware.cors import CORSMiddleware
+import requests
+import os
 
 app = FastAPI()
+
+# Strapi Configuration
+STRAPI_API_URL = os.getenv("STRAPI_API_URL", "https://tasteful-positivity-a3d6d1c.strapicloud.io/api/deals")
 
 app.add_middleware(
     CORSMiddleware,
@@ -15,19 +19,43 @@ app.add_middleware(
 @app.get("/api/deals/gym")
 async def get_gym_deals():
     try:
-        deals = await run_category_scrapers('gym')
-        # Return list directly to match frontend expectation if needed, or stick to current format.
-        # Based on index.html: const data = await response.json(); if (!data || data.length ... grid.innerHTML = data.map...)
-        # The frontend expects a raw LIST, not {"data": ...} wrapper.
-        # I will change this to return the list directly to fix the frontend logic too.
-        return deals 
+        # Fetch deals from Strapi
+        # Strapi returns data wrapped in { data: [...] }
+        # We need to fetch with ?populate=* to get images if they are relations (though 'fields' might be flat in your case)
+        target_url = STRAPI_API_URL
+        
+        try:
+             # Populate=* ensures we get related components/media if the schema uses them
+             response = requests.get(target_url, params={"populate": "*"}, timeout=10)
+             response.raise_for_status()
+             
+             strapi_data = response.json()
+             raw_deals = strapi_data.get('data', [])
+             
+             # IMPORTANT: Strapi V4/V5 returns attributes nested inside 'attributes' key. 
+             # We must normalize this for the frontend which expects flat objects.
+             normalized_deals = []
+             for item in raw_deals:
+                 # Handle if item has 'attributes' (V4/V5) or is flat
+                 attrs = item.get('attributes', item)
+                 
+                 # Ensure ID is preserved
+                 deal_obj = {
+                     "id": item.get('id'),
+                     **attrs
+                 }
+                 normalized_deals.append(deal_obj)
+                 
+             return normalized_deals
+             
+        except requests.exceptions.RequestException as e:
+             print(f"Strapi Connection Error: {e}")
+             # If Strapi is empty or unreachable, return empty list or fallback to prevent frontend crash
+             return []
+
     except Exception as e:
         return {"error": str(e), "status": "error"}
 
 @app.get("/api/debug/scrapers")
 async def debug_scrapers():
-    try:
-        scrapers = get_loaded_scraper_names('gym')
-        return {"loaded_scrapers": scrapers, "status": "success"}
-    except Exception as e:
-        return {"error": str(e), "status": "error"}
+    return {"message": "Deals are fetched from Strapi Cloud: " + STRAPI_API_URL, "status": "info"}
