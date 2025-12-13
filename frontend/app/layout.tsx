@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   description: "Find and compare the best supplement deals in India.",
 };
 
-import { Providers } from "@/components/Providers";
+
 
 export default function RootLayout({
   children,
@@ -29,7 +29,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#1a1a1a] text-white`}
       >
-        <Providers>{children}</Providers>
+        {children}
       </body>
     </html>
   );

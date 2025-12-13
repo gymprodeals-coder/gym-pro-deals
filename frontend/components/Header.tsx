@@ -4,7 +4,7 @@ import { Dumbbell, ShoppingCart, User } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import LoginModal from "./LoginModal";
-import { useSession } from "next-auth/react";
+
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
