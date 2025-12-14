@@ -6,7 +6,7 @@ import os
 app = FastAPI()
 
 # Strapi Configuration
-STRAPI_API_URL = os.getenv("STRAPI_API_URL", "https://tasteful-positivity-a3d6d1c.strapicloud.io/api/deals")
+STRAPI_API_URL = os.getenv("STRAPI_API_URL", "https://tasteful-positivity-a58d61deb8.strapiapp.com/api/deals")
 
 app.add_middleware(
     CORSMiddleware,
