@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useDeferredValue } from "react";
 import { Search, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 import ProductCard from "./ProductCard";
@@ -18,6 +18,7 @@ const CATEGORY_ORDER = [
 
 export default function HomeContent({ products }: { products: Product[] }) {
     const [searchQuery, setSearchQuery] = useState("");
+    const deferredSearchQuery = useDeferredValue(searchQuery);
 
     // Grouping Logic
     const groupedProducts = useMemo(() => {
@@ -32,7 +33,7 @@ export default function HomeContent({ products }: { products: Product[] }) {
             if (!p) return false;
             // Safe title access
             const title = p.title || "";
-            return title.toLowerCase().includes(searchQuery.toLowerCase());
+            return title.toLowerCase().includes(deferredSearchQuery.toLowerCase());
         });
 
         // 2. Group
@@ -48,7 +49,7 @@ export default function HomeContent({ products }: { products: Product[] }) {
         });
 
         return groups;
-    }, [products, searchQuery]);
+    }, [products, deferredSearchQuery]);
 
     return (
         <main className="min-h-screen bg-gray-100">

@@ -63,6 +63,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 <img
                     src={imgError ? "https://placehold.co/400x400/f3f4f6/a3a3a3?text=No+Image" : `https://wsrv.nl/?url=${encodeURIComponent(imgSrc)}&w=400&h=400&fit=contain&output=webp`}
                     alt={title}
+                    loading="lazy"
+                    decoding="async"
                     referrerPolicy="no-referrer" // <--- CRITICAL: Fixes Amazon/Flipkart blocking images
                     className="object-contain h-full w-full group-hover:scale-105 transition-transform duration-300"
                     onError={() => {
@@ -117,4 +119,4 @@ const ProductCard: React.FC<ProductCardProps> = ({
     );
 };
 
-export default ProductCard;
+export default React.memo(ProductCard);

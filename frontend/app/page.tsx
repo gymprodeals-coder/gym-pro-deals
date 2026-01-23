@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import HomeContent from "@/components/HomeContent";
+import SkeletonCard from "@/components/SkeletonCard";
 import type { Product } from "@/lib/api";
 
 const API_URL = "https://prodeals-api.onrender.com/api/deals/gym";
@@ -66,7 +67,6 @@ export default function Home() {
         const deals = (data && Array.isArray(data)) ? data : (data?.data || []);
         setProducts(Array.isArray(deals) ? deals : []);
       } catch (err) {
-        console.error("Fetch error:", err);
         // We still set error, but we'll show fallback products if products is empty
         setError("Could not load deals at the moment. Showing latest featured supplements.");
       } finally {
@@ -85,10 +85,18 @@ export default function Home() {
       <Header />
 
       {loading ? (
-        <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
-          <div className="w-12 h-12 border-4 border-gray-300 border-t-[var(--primary)] rounded-full animate-spin mb-4"></div>
-          <p className="text-gray-500 font-medium">Loading best deals...</p>
-        </div>
+        <main className="min-h-screen bg-gray-100">
+          {/* Simple Hero Shim */}
+          <div className="bg-[#0a0a0a] h-[400px] w-full rounded-b-[3rem] mb-12 animate-pulse" />
+
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <SkeletonCard key={i} />
+              ))}
+            </div>
+          </div>
+        </main>
       ) : (
         <HomeContent products={displayProducts} />
       )}
