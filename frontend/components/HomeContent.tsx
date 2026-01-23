@@ -23,10 +23,17 @@ export default function HomeContent({ products }: { products: Product[] }) {
     const groupedProducts = useMemo(() => {
         const groups: Record<string, Product[]> = {};
 
+        // 0. Safety Check
+        if (!products || !Array.isArray(products)) return {};
+
         // 1. Filter first
-        const filtered = products.filter((p) =>
-            p.title.toLowerCase().includes(searchQuery.toLowerCase())
-        );
+        const filtered = products.filter((p) => {
+            // Guard against null/undefined product
+            if (!p) return false;
+            // Safe title access
+            const title = p.title || "";
+            return title.toLowerCase().includes(searchQuery.toLowerCase());
+        });
 
         // 2. Group
         filtered.forEach((product) => {
@@ -37,7 +44,7 @@ export default function HomeContent({ products }: { products: Product[] }) {
 
         // 3. Sort within groups by Price (Lowest First)
         Object.keys(groups).forEach(cat => {
-            groups[cat].sort((a, b) => a.price - b.price);
+            groups[cat].sort((a, b) => (a.price || 0) - (b.price || 0));
         });
 
         return groups;
@@ -136,9 +143,9 @@ export default function HomeContent({ products }: { products: Product[] }) {
                                 </div>
 
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                                    {deals.map((product) => (
+                                    {deals.map((product, idx) => (
                                         <ProductCard
-                                            key={product.id}
+                                            key={product.id || `p-${idx}`}
                                             id={product.id}
                                             title={product.title}
                                             brand={product.brand}

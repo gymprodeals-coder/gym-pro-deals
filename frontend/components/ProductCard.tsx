@@ -88,15 +88,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 </div>
 
                 {/* Title */}
-                <h3 className="font-bold text-gray-900 line-clamp-2 text-sm mb-auto" title={title}>
-                    {title}
+                <h3 className="font-bold text-gray-900 line-clamp-2 text-sm mb-auto" title={title || "Product"}>
+                    {title || "Untitled Product"}
                 </h3>
 
                 {/* Price Block */}
                 <div className="mt-4 mb-4">
                     <div className="flex items-baseline gap-2">
-                        <span className="text-xl font-extrabold text-[#ff3366]">₹{price}</span>
-                        {original_price > price && (
+                        <span className="text-xl font-extrabold text-[#ff3366]">₹{price || 0}</span>
+                        {(original_price || 0) > (price || 0) && (
                             <span className="text-xs text-gray-400 line-through">₹{original_price}</span>
                         )}
                     </div>

@@ -62,9 +62,9 @@ export default function Home() {
         if (!response.ok) throw new Error("Failed to fetch deals");
         const data = await response.json();
 
-        // Handle both list format and object format just in case
-        const deals = Array.isArray(data) ? data : data.data || [];
-        setProducts(deals);
+        // Handle both list format and object format safely
+        const deals = (data && Array.isArray(data)) ? data : (data?.data || []);
+        setProducts(Array.isArray(deals) ? deals : []);
       } catch (err) {
         console.error("Fetch error:", err);
         // We still set error, but we'll show fallback products if products is empty
