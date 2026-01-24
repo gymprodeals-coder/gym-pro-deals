@@ -18,7 +18,7 @@ export default function PrivacyPolicyPage() {
                     <div className="space-y-6 text-lg leading-relaxed">
                         <section>
                             <p>
-                                At GymProDeals, we respect your privacy and are committed to protecting your personal information.
+                                At GymPro Deals, we respect your privacy and are committed to protecting your personal information.
                             </p>
                         </section>
 
@@ -51,7 +51,7 @@ export default function PrivacyPolicyPage() {
                         <section>
                             <h2 className="text-2xl font-bold mb-3">Cookies</h2>
                             <p>
-                                GymProDeals uses cookies to improve performance and user experience. By using this website, you consent to our use of cookies.
+                                GymPro Deals uses cookies to improve performance and user experience. By using this website, you consent to our use of cookies.
                             </p>
                         </section>
 

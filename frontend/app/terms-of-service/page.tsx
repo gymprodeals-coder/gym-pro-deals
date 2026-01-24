@@ -18,21 +18,21 @@ export default function TermsOfServicePage() {
                     <div className="space-y-6 text-lg leading-relaxed">
                         <section>
                             <p>
-                                By accessing and using GymProDeals, you agree to the following terms:
+                                By accessing and using GymPro Deals, you agree to the following terms:
                             </p>
                         </section>
 
                         <section>
                             <h2 className="text-2xl font-bold mb-3">Use of Website</h2>
                             <p>
-                                GymProDeals provides information on fitness supplements, deals, and price comparisons for informational purposes only.
+                                GymPro Deals provides information on fitness supplements, deals, and price comparisons for informational purposes only.
                             </p>
                         </section>
 
                         <section>
                             <h2 className="text-2xl font-bold mb-3">Affiliate Links</h2>
                             <p>
-                                GymProDeals may contain affiliate links. We may earn a commission when users purchase products through these links.
+                                GymPro Deals may contain affiliate links. We may earn a commission when users purchase products through these links.
                             </p>
                         </section>
 
@@ -53,7 +53,7 @@ export default function TermsOfServicePage() {
                         <section>
                             <h2 className="text-2xl font-bold mb-3">Limitation of Liability</h2>
                             <p>
-                                GymProDeals shall not be held liable for any loss, damage, or inconvenience arising from the use of this website or third-party services.
+                                GymPro Deals shall not be held liable for any loss, damage, or inconvenience arising from the use of this website or third-party services.
                             </p>
                         </section>
 

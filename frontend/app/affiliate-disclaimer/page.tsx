@@ -19,7 +19,7 @@ export default function AffiliateDisclaimerPage() {
                         <section>
                             <h2 className="text-2xl font-bold mb-3">Affiliate Participation</h2>
                             <p>
-                                GymProDeals participates in affiliate marketing programs. This means that when users click on product links and make a purchase, GymProDeals may earn a small commission at no additional cost to the user.
+                                GymPro Deals participates in affiliate marketing programs. This means that when users click on product links and make a purchase, GymPro Deals may earn a small commission at no additional cost to the user.
                             </p>
                         </section>
 

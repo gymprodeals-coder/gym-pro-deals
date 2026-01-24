@@ -36,7 +36,7 @@ export default function Header() {
                             <Dumbbell className="text-white" size={24} strokeWidth={2.5} />
                         </div>
                         <span className="text-xl font-black text-white tracking-tight">
-                            GymPro <span className="text-[var(--primary)]">Deal</span>
+                            GymPro <span className="text-[var(--primary)]">Deals</span>
                         </span>
                     </Link>
 

@@ -19,7 +19,7 @@ export default function ComparePage() {
                     <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 mb-12">
                         <h2 className="text-2xl font-bold mb-4">How We Compare Prices</h2>
                         <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-                            GymProDeals automatically tracks prices from India's top supplement stores including Amazon, Flipkart, and HealthKart. We show you the lowest price available so you never overpay.
+                            GymPro Deals automatically tracks prices from India's top supplement stores including Amazon, Flipkart, and HealthKart. We show you the lowest price available so you never overpay.
                         </p>
 
                         <div className="grid md:grid-cols-3 gap-8 mb-8">

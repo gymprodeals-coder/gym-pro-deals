@@ -44,7 +44,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                                 <Dumbbell className="text-white" size={32} />
                             </div>
                             <h2 className="text-2xl font-bold text-white">
-                                {isLogin ? "Welcome Back" : "Join GymPro Deal"}
+                                {isLogin ? "Welcome Back" : "Join GymPro Deals"}
                             </h2>
                             <p className="text-gray-400 text-sm mt-2 text-center">
                                 {isLogin
