@@ -238,6 +238,7 @@ function NewsletterForm() {
                 <input
                     id="newsletter-email"
                     name="email"
+                    autoComplete="email"
                     type="email"
                     placeholder="you@example.com"
                     value={email}

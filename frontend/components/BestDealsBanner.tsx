@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import { ExternalLink, Star, Tag, TrendingDown } from "lucide-react";
 import { Product } from "@/lib/api";
+import { getCategoryImage } from "@/lib/images";
 
 export default function BestDealsBanner({ products }: { products: Product[] }) {
 
@@ -45,10 +46,10 @@ export default function BestDealsBanner({ products }: { products: Product[] }) {
                             {/* Image */}
                             <div className="w-24 h-24 bg-white rounded-xl p-2 flex items-center justify-center shrink-0 border border-gray-100">
                                 <img
-                                    src={deal.image_url}
+                                    src={getCategoryImage(deal.category)}
                                     alt={deal.title}
                                     className="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500"
-                                    onError={(e) => (e.currentTarget.src = "/images/categories/supplements.svg")}
+                                    loading="lazy"
                                 />
                             </div>
 
