@@ -1,11 +1,6 @@
-export interface Deal {
-    title: string;
-    price: number;
-    store_name: string;
-    product_url: string;
-    image_url: string;
-}
+import dealsData from '../data/deals.json';
 
+// Type definitions to match our app's needs
 export interface Product {
     id: string;
     title: string;
@@ -19,75 +14,54 @@ export interface Product {
 }
 
 export async function fetchGymDeals(): Promise<Product[]> {
+    // Simulate network delay for realism if needed, or keep it instant
+    // Using local data ensures reliability and speed
+
     try {
-        const res = await fetch("http://127.0.0.1:8000/api/deals/gym", {
-            cache: "no-store"
-        });
+        // Map the flat JSON structure to our grouped Product structure
+        // In the JSON, we might have duplicates for the same product from different stores,
+        // or just single entries. The logic below handles grouping by normalized title.
 
-        if (!res.ok) {
-            throw new Error("Failed to fetch deals");
-        }
-
-        const json = await res.json();
-        const rawDeals: Deal[] = json.data;
-
-        // Processing Logic
         const productsMap = new Map<string, Product>();
 
-        rawDeals.forEach((deal) => {
-            // Simple normalization for grouping
-            const key = deal.title.trim().toLowerCase();
+        dealsData.forEach((deal) => {
+            const key = deal.id || deal.title.trim().toLowerCase();
 
             if (!productsMap.has(key)) {
                 productsMap.set(key, {
                     id: key,
                     title: deal.title,
-                    brand: guessBrand(deal.title),
+                    brand: deal.brand || "Generic",
                     image_url: deal.image_url,
                     price: deal.price,
-                    original_price: Math.round(deal.price * 1.4), // Mock original price
-                    rating: 4.0 + Math.random(), // Mock rating
+                    original_price: deal.original_price || Math.round(deal.price * 1.2),
+                    rating: deal.rating || 4.5,
                     stores: [],
-                    category: guessCategory(deal.title)
+                    category: deal.category || "Supplements"
                 });
             }
 
             const product = productsMap.get(key)!;
 
-            // Update lowest price logic
-            if (deal.price < product.price) {
-                product.price = deal.price;
-                // Maybe update image to the cheapest one?
-            }
-
+            // If we have multiple entries for the same product, we can pick the best price here
+            // For now, our JSON is mostly unique items, but we add the store info
             product.stores.push({
-                name: deal.store_name,
+                name: deal.store_name || "Best Deal",
                 price: deal.price,
                 url: deal.product_url
             });
+
+            // Ensure main price/image reflects the current best deal entry if we were merging
+            // Since we push to stores, the UI often picks stores[0] or we can sort stores by price
+            // Let's assume the JSON entry is authoritative for the main display properties
         });
 
+        // Convert grouped map to array and sort by category/popularity if needed
         return Array.from(productsMap.values());
 
     } catch (error) {
-        console.error("Error fetching deals:", error);
+        console.error("Error loading local deals:", error);
         return [];
     }
 }
 
-function guessBrand(title: string): string {
-    const brands = ["Optimum Nutrition", "MuscleBlaze", "GNC", "MuscleTech", "Asitis", "Bigmuscles"];
-    for (const b of brands) {
-        if (title.toLowerCase().includes(b.toLowerCase())) return b;
-    }
-    return "Generic";
-}
-
-function guessCategory(title: string): string {
-    const lower = title.toLowerCase();
-    if (lower.includes("whey")) return "Whey Protein";
-    if (lower.includes("creatine")) return "Creatine";
-    if (lower.includes("bcaa")) return "BCAA";
-    if (lower.includes("multivitamin")) return "Multivitamin";
-    return "Supplements";
-}

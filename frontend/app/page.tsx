@@ -5,9 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import HomeContent from "@/components/HomeContent";
 import SkeletonCard from "@/components/SkeletonCard";
-import type { Product } from "@/lib/api";
-
-const API_URL = "https://prodeals-api.onrender.com/api/deals/gym";
+import { fetchGymDeals, type Product } from "@/lib/api";
 
 const FALLBACK_PRODUCTS: Product[] = [
   {
@@ -59,13 +57,9 @@ export default function Home() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch(API_URL);
-        if (!response.ok) throw new Error("Failed to fetch deals");
-        const data = await response.json();
-
-        // Handle both list format and object format safely
-        const deals = (data && Array.isArray(data)) ? data : (data?.data || []);
-        setProducts(Array.isArray(deals) ? deals : []);
+        // Load from local JSON via helper utility
+        const deals = await fetchGymDeals();
+        setProducts(deals);
       } catch (err) {
         // We still set error, but we'll show fallback products if products is empty
         setError("Could not load deals at the moment. Showing latest featured supplements.");
