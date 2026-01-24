@@ -23,6 +23,15 @@ export default function BestDealsBanner({ products }: { products: Product[] }) {
         return withDiscount.sort((a, b) => b.discount - a.discount).slice(0, 3);
     }, [products]);
 
+    const getSearchUrl = (storeName: string, productTitle: string) => {
+        const cleanTitle = encodeURIComponent(productTitle || "");
+        const s = (storeName || "").toLowerCase();
+        if (s.includes("amazon")) return `https://www.amazon.in/s?k=${cleanTitle}`;
+        if (s.includes("flipkart")) return `https://www.flipkart.com/search?q=${cleanTitle}`;
+        if (s.includes("healthkart")) return `https://www.healthkart.com/search?q=${cleanTitle}`;
+        return `https://www.google.com/search?q=${cleanTitle} buy online`;
+    };
+
     if (topDeals.length === 0) return null;
 
     return (
@@ -76,9 +85,9 @@ export default function BestDealsBanner({ products }: { products: Product[] }) {
                                         <span className="text-lg font-black text-gray-900">₹{deal.price}</span>
                                     </div>
                                     <a
-                                        href={deal.stores?.[0]?.url || "#"}
+                                        href={getSearchUrl(deal.stores?.[0]?.name || "Best Deal", deal.title)}
                                         target="_blank"
-                                        rel="nofollow noreferrer"
+                                        rel="noopener noreferrer nofollow"
                                         className="bg-black hover:bg-[var(--primary)] text-white p-2 rounded-lg transition-colors shadow-lg shadow-black/10 group-hover:shadow-[var(--primary)]/20"
                                     >
                                         <ExternalLink size={16} />

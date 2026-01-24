@@ -41,10 +41,10 @@ export default function ContactPage() {
                                     For all inquiries, please email us directly. We aim to respond within 24 hours.
                                 </p>
                                 <a
-                                    href="mailto:support@gymprodeals.in"
+                                    href="mailto:gymprodeals@gmail.com"
                                     className="text-white font-bold text-lg hover:text-[var(--primary)] transition-colors"
                                 >
-                                    support@gymprodeals.in
+                                    gymprodeals@gmail.com
                                 </a>
                             </div>
 

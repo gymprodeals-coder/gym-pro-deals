@@ -14,6 +14,11 @@ export default function Footer() {
                             GymPro Deals uses affiliate links. We may earn a commission at no extra cost to users.
                         </p>
                     </div>
+                    <div className="mt-4">
+                        <a href="mailto:gymprodeals@gmail.com" className="text-sm text-[var(--primary)] hover:underline">
+                            gymprodeals@gmail.com
+                        </a>
+                    </div>
                 </div>
 
                 <div>

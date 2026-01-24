@@ -38,7 +38,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     }, [store_name, stores]);
 
     const availableStores = useMemo(() => {
-        return stores && stores.length > 0 ? stores : [{ name: effectiveStoreName, price: price, url: "#" }];
+        return stores && stores.length > 0 ? stores : [{ name: effectiveStoreName, price: price, url: "" }];
     }, [stores, effectiveStoreName, price]);
 
     const hasMultipleStores = availableStores.length > 1;
@@ -68,7 +68,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         return `https://www.google.com/search?q=${cleanTitle} buy online`;
     };
 
-    const mainUrl = availableStores[0]?.url || getSearchUrl(effectiveStoreName);
+    const mainUrl = getSearchUrl(effectiveStoreName);
 
     return (
         <div className="group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 flex flex-col h-full relative">
@@ -164,7 +164,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                                     <p className="text-sm font-black text-[#ff3366]">₹{store.price}</p>
                                 </div>
                                 <a
-                                    href={store.url || getSearchUrl(store.name)}
+                                    href={getSearchUrl(store.name)}
                                     target="_blank"
                                     rel="nofollow noreferrer"
                                     className="bg-black text-white text-xs font-bold px-3 py-2 rounded hover:bg-gray-800"
