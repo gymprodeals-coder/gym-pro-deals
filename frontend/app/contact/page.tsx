@@ -77,26 +77,18 @@ export default function ContactPage() {
                         {/* Visual / Form Stub */}
                         <div className="bg-gradient-to-br from-gray-900 to-black p-8 rounded-3xl border border-white/10 shadow-2xl">
                             <h3 className="text-xl font-bold mb-6">Send us a message</h3>
-                            <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-                                <div>
-                                    <label htmlFor="contact-name" className="block text-sm font-medium text-gray-400 mb-2">Name</label>
-                                    <input id="contact-name" name="name" type="text" placeholder="Your name" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[var(--primary)] transition-colors" />
+                            <div className="flex flex-col items-center justify-center h-full min-h-[300px] text-center space-y-4">
+                                <div className="bg-white/5 p-4 rounded-full">
+                                    <Send size={32} className="text-gray-500" />
                                 </div>
                                 <div>
-                                    <label htmlFor="contact-email" className="block text-sm font-medium text-gray-400 mb-2">Email</label>
-                                    <input id="contact-email" name="email" type="email" placeholder="you@example.com" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[var(--primary)] transition-colors" />
+                                    <h4 className="text-lg font-bold text-white mb-2">Contact Form Coming Soon</h4>
+                                    <p className="text-gray-400 text-sm max-w-xs mx-auto">
+                                        We are currently upgrading our support system.
+                                        Please use the email address on the left for all inquiries.
+                                    </p>
                                 </div>
-                                <div>
-                                    <label htmlFor="contact-message" className="block text-sm font-medium text-gray-400 mb-2">Message</label>
-                                    <textarea id="contact-message" name="message" rows={4} placeholder="How can we help?" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[var(--primary)] transition-colors resize-none" />
-                                </div>
-                                <button className="w-full bg-[var(--primary)] hover:bg-pink-600 text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-[var(--primary)]/20 flex items-center justify-center gap-2">
-                                    Send Message <Send size={18} />
-                                </button>
-                                <p className="text-xs text-center text-gray-500 mt-4">
-                                    This form is currently in demo mode. Please use email for urgent inquiries.
-                                </p>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
