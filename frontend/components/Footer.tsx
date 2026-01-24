@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function Footer() {
     return (
         <footer className="bg-[#111111] text-gray-400 py-12 border-t border-gray-800">
@@ -17,18 +19,18 @@ export default function Footer() {
                 <div>
                     <h4 className="text-white font-bold mb-4">Quick Links</h4>
                     <ul className="space-y-2 text-sm">
-                        <li><a href="#" className="hover:text-[var(--primary)]">Top Deals</a></li>
-                        <li><a href="#" className="hover:text-[var(--primary)]">Compare</a></li>
-                        <li><a href="#" className="hover:text-[var(--primary)]">categories</a></li>
+                        <li><Link href="/" className="hover:text-[var(--primary)] transition-colors">Top Deals</Link></li>
+                        <li><Link href="/compare" className="hover:text-[var(--primary)] transition-colors">Compare</Link></li>
+                        <li><Link href="/categories" className="hover:text-[var(--primary)] transition-colors">Categories</Link></li>
                     </ul>
                 </div>
 
                 <div>
                     <h4 className="text-white font-bold mb-4">Legal</h4>
                     <ul className="space-y-2 text-sm">
-                        <li><a href="#" className="hover:text-[var(--primary)]">Privacy Policy</a></li>
-                        <li><a href="#" className="hover:text-[var(--primary)]">Terms of Service</a></li>
-                        <li><a href="#" className="hover:text-[var(--primary)]">Affiliate Disclaimer</a></li>
+                        <li><Link href="/privacy-policy" className="hover:text-[var(--primary)] transition-colors">Privacy Policy</Link></li>
+                        <li><Link href="/terms-of-service" className="hover:text-[var(--primary)] transition-colors">Terms of Service</Link></li>
+                        <li><Link href="/affiliate-disclaimer" className="hover:text-[var(--primary)] transition-colors">Affiliate Disclaimer</Link></li>
                     </ul>
                 </div>
 
@@ -36,9 +38,9 @@ export default function Footer() {
                     <h4 className="text-white font-bold mb-4">Stay Connected</h4>
                     <div className="flex gap-4">
                         {/* Social icons placeholders */}
-                        <div className="w-8 h-8 bg-gray-800 rounded-full hover:bg-[var(--primary)] transition-colors"></div>
-                        <div className="w-8 h-8 bg-gray-800 rounded-full hover:bg-[var(--primary)] transition-colors"></div>
-                        <div className="w-8 h-8 bg-gray-800 rounded-full hover:bg-[var(--primary)] transition-colors"></div>
+                        <div className="w-8 h-8 bg-gray-800 rounded-full hover:bg-[var(--primary)] transition-colors cursor-pointer"></div>
+                        <div className="w-8 h-8 bg-gray-800 rounded-full hover:bg-[var(--primary)] transition-colors cursor-pointer"></div>
+                        <div className="w-8 h-8 bg-gray-800 rounded-full hover:bg-[var(--primary)] transition-colors cursor-pointer"></div>
                     </div>
                 </div>
             </div>
