@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from 'react';
-import { ShoppingCart, ExternalLink } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { ShoppingCart, ExternalLink, AlertCircle } from 'lucide-react';
 
 interface ProductCardProps {
     title: string;
@@ -9,10 +9,10 @@ interface ProductCardProps {
     original_price: number;
     discount_percentage?: number;
     image_url: string;
-    product_url?: string;
+    product_url?: string; // Optional because we might need to fallback
     store_name?: string;
-    // Shim for old props to prevent breakage until parent is updated
-    stores?: any[];
+    // Shim for old props
+    stores?: Array<{ name: string; url: string; price: number }>;
     id?: string;
     brand?: string;
     rating?: number;
@@ -26,55 +26,113 @@ const ProductCard: React.FC<ProductCardProps> = ({
     image_url,
     product_url,
     store_name,
-    stores, // Fallback for old prop
+    stores,
 }) => {
-    // 1. STATE: Handle broken images automatically
-    const [imgSrc, setImgSrc] = useState(image_url);
-    const [imgError, setImgError] = useState(false);
+    // 1. ROBUST DATA RESOLUTION
+    // Resolve Store Name
+    const effectiveStoreName = useMemo(() => {
+        if (store_name) return store_name;
+        if (stores && stores.length > 0 && stores[0].name) return stores[0].name;
+        return "Best Deal";
+    }, [store_name, stores]);
 
-    // Fallback Logic for props if parent component hasn't been updated yet
-    const effectiveStoreName = store_name || (stores && stores.length > 0 ? stores[0].name : "Best Deal");
-    // Logic to find url from stores array if product_url is missing
-    const effectiveProductUrl = product_url || (stores && stores.length > 0 ? stores[0].url : "#");
+    // Resolve Product URL
+    const rawProductUrl = useMemo(() => {
+        if (product_url) return product_url;
+        if (stores && stores.length > 0 && stores[0].url) return stores[0].url;
+        return "";
+    }, [product_url, stores]);
 
-    // Calculate discount if not provided
-    const effectiveDiscount = discount_percentage !== undefined
-        ? discount_percentage
-        : (original_price && original_price > price
-            ? Math.round(((original_price - price) / original_price) * 100)
-            : 0);
+    // 2. IMAGE HANDLING STATE
+    const [imgSrc, setImgSrc] = useState<string>(image_url);
+    const [hasError, setHasError] = useState(false);
+    const [useProxy, setUseProxy] = useState(true); // default to proxy for resizing
+
+    // 3. SAFE URL GENERATION
+    const { finalUrl, isFallback } = useMemo(() => {
+        const cleanTitle = encodeURIComponent(title || "");
+
+        // Helper: Generate search fallback
+        const getSearchUrl = (store: string) => {
+            const s = store.toLowerCase();
+            if (s.includes("amazon")) return `https://www.amazon.in/s?k=${cleanTitle}`;
+            if (s.includes("flipkart")) return `https://www.flipkart.com/search?q=${cleanTitle}`;
+            if (s.includes("healthkart")) return `https://www.healthkart.com/search?q=${cleanTitle}`;
+            return `https://www.google.com/search?q=${cleanTitle} buy online`;
+        };
+
+        // Validate Raw URL
+        if (!rawProductUrl || rawProductUrl.length < 5 || rawProductUrl === "#") {
+            return { finalUrl: getSearchUrl(effectiveStoreName), isFallback: true };
+        }
+
+        let url = rawProductUrl.trim();
+        // Fix missing protocol
+        if (!url.startsWith("http")) {
+            url = `https://${url}`;
+        }
+
+        // Basic validation regex
+        try {
+            new URL(url); // Will throw if invalid
+            return { finalUrl: url, isFallback: false };
+        } catch (e) {
+            return { finalUrl: getSearchUrl(effectiveStoreName), isFallback: true };
+        }
+    }, [rawProductUrl, title, effectiveStoreName]);
+
+    // 4. DISCOUNT CALCULATION
+    const effectiveDiscount = useMemo(() => {
+        if (discount_percentage !== undefined) return discount_percentage;
+        if (original_price && price && original_price > price) {
+            return Math.round(((original_price - price) / original_price) * 100);
+        }
+        return 0;
+    }, [discount_percentage, original_price, price]);
 
 
-    // 2. LOGIC: Sanitize the URL to prevent 404s
-    // If the scraper gave us a relative link like "/product...", force it to be absolute.
-    const getSafeUrl = (url: string) => {
-        if (!url) return "#";
-        if (url.startsWith("http")) return url;
-        return `https://${url}`; // Force HTTPS if missing
+    // 5. IMAGE SRC LOGIC
+    const finalImageSrc = useMemo(() => {
+        if (hasError || !image_url) return "https://placehold.co/400x400/f3f4f6/a3a3a3?text=No+Image";
+
+        // Use wsrv.nl proxy for resizing and reliable delivery (bypasses some hotlink blocks)
+        if (useProxy) {
+            return `https://wsrv.nl/?url=${encodeURIComponent(image_url)}&w=400&h=400&fit=contain&output=webp&il`;
+        }
+
+        // Fallback to direct URL (with no-referrer policy)
+        return image_url;
+    }, [image_url, hasError, useProxy]);
+
+
+    const handleImageError = () => {
+        if (useProxy) {
+            // If proxy failed, try direct image
+            setUseProxy(false);
+        } else {
+            // If direct failed, show placeholder
+            setHasError(true);
+        }
     };
-
-    const safeUrl = getSafeUrl(effectiveProductUrl);
 
     return (
         <div className="group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 flex flex-col h-full">
 
             {/* IMAGE SECTION */}
-            <div className="relative h-48 w-full bg-white p-4 flex items-center justify-center">
+            <div className="relative h-48 w-full bg-white p-4 flex items-center justify-center overflow-hidden">
                 <img
-                    src={imgError ? "https://placehold.co/400x400/f3f4f6/a3a3a3?text=No+Image" : `https://wsrv.nl/?url=${encodeURIComponent(imgSrc)}&w=400&h=400&fit=contain&output=webp`}
-                    alt={title}
+                    src={finalImageSrc}
+                    alt={title || "Product Image"}
                     loading="lazy"
                     decoding="async"
-                    referrerPolicy="no-referrer" // <--- CRITICAL: Fixes Amazon/Flipkart blocking images
-                    className="object-contain h-full w-full group-hover:scale-105 transition-transform duration-300"
-                    onError={() => {
-                        setImgError(true); // Switch to placeholder on error
-                    }}
+                    referrerPolicy="no-referrer"
+                    className={`object-contain h-full w-full transition-transform duration-500 group-hover:scale-105 ${hasError ? 'opacity-50 grayscale' : ''}`}
+                    onError={handleImageError}
                 />
 
                 {/* Discount Badge */}
                 {effectiveDiscount > 0 && (
-                    <span className="absolute top-2 right-2 bg-[#ff3366] text-white text-xs font-bold px-2 py-1 rounded-full shadow-sm">
+                    <span className="absolute top-2 right-2 bg-[#ff3366] text-white text-xs font-bold px-2 py-1 rounded-full shadow-sm z-10">
                         -{effectiveDiscount}%
                     </span>
                 )}
@@ -83,10 +141,16 @@ const ProductCard: React.FC<ProductCardProps> = ({
             {/* CONTENT SECTION */}
             <div className="p-4 flex flex-col flex-grow">
                 {/* Store Name Badge */}
-                <div className="mb-2">
+                <div className="mb-2 flex items-center justify-between">
                     <span className="inline-block bg-gray-100 text-gray-600 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
                         {effectiveStoreName}
                     </span>
+                    {/* Fallback Indicator (Subtle) */}
+                    {isFallback && (
+                        <span title="Direct link unavailable, searching store instead" className="text-amber-500 cursor-help">
+                            <AlertCircle size={12} />
+                        </span>
+                    )}
                 </div>
 
                 {/* Title */}
@@ -104,14 +168,23 @@ const ProductCard: React.FC<ProductCardProps> = ({
                     </div>
                 </div>
 
-                {/* ACTION BUTTON (Must be an <a> tag for Cuelinks) */}
+                {/* ACTION BUTTON */}
                 <a
-                    href={safeUrl}
+                    href={finalUrl}
                     target="_blank"
-                    rel="noopener noreferrer nofollow" // 'nofollow' is required for affiliate links
-                    className="w-full flex items-center justify-center gap-2 bg-[#ff3366] hover:bg-[#e62e5c] text-white font-bold py-2.5 px-4 rounded-lg transition-colors text-sm"
+                    rel="noopener noreferrer nofollow"
+                    className={`w-full flex items-center justify-center gap-2 font-bold py-2.5 px-4 rounded-lg transition-colors text-sm ${isFallback
+                            ? "bg-amber-500 hover:bg-amber-600 text-white" // Different color for search fallback if desired, or keep same. Keeping uniform usually better.
+                            : "bg-[#ff3366] hover:bg-[#e62e5c] text-white"
+                        }`}
+                    onClick={(e) => {
+                        if (!finalUrl || finalUrl === "#") {
+                            e.preventDefault();
+                            alert("Sorry, this deal is currently unavailable.");
+                        }
+                    }}
                 >
-                    <span>View Deal</span>
+                    <span>{isFallback ? "Find Deal" : "View Deal"}</span>
                     <ExternalLink size={14} />
                 </a>
             </div>
