@@ -22,7 +22,7 @@ export default function Header() {
         { name: "Home", href: "/" },
         { name: "Deals", href: "/#featured-deals" },
         { name: "Compare", href: "/#categories" },
-        { name: "About", href: "/#newsletter" }, // Reuse newsletter for now
+        { name: "About", href: "/about" },
         { name: "Contact", href: "/#newsletter" },
     ];
 

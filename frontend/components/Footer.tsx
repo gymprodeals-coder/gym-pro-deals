@@ -45,7 +45,8 @@ export default function Footer() {
                 </div>
             </div>
             <div className="container mx-auto px-4 mt-8 pt-8 border-t border-gray-800 text-center text-xs">
-                © {new Date().getFullYear()} GymPro Deal. All rights reserved.
+                <p>© {new Date().getFullYear()} GymPro Deal. All rights reserved.</p>
+                <p className="mt-2 text-gray-600">Built & maintained by <span className="text-gray-500 hover:text-gray-400 transition-colors">Vengateshwaran</span></p>
             </div>
         </footer>
     );
