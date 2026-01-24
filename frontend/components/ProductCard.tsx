@@ -1,5 +1,6 @@
 "use client";
 
+import { getCategoryImage } from '@/lib/images';
 import React, { useMemo } from 'react';
 import { ExternalLink, Search } from 'lucide-react';
 
@@ -38,14 +39,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     const [hasError, setHasError] = React.useState(false);
 
     const localImageSrc = useMemo(() => {
-        const cat = (category || "").toLowerCase();
-        if (cat.includes("whey")) return "/images/categories/whey-protein.svg";
-        if (cat.includes("creatine")) return "/images/categories/creatine.svg";
-        if (cat.includes("pre")) return "/images/categories/pre-workout.svg";
-        if (cat.includes("bcaa")) return "/images/categories/bcaa.svg";
-        if (cat.includes("vitamin")) return "/images/categories/vitamins.svg";
-        if (cat.includes("gainer")) return "/images/categories/mass-gainer.svg";
-        return "/images/categories/supplements.svg";
+        return getCategoryImage(category);
     }, [category]);
 
     // 3. DISCOUNT LOGIC
