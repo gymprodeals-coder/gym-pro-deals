@@ -82,6 +82,9 @@ export default function HomeContent({ products }: { products: Product[] }) {
                     {/* Search Bar */}
                     <div className="relative max-w-2xl mx-auto flex shadow-2xl rounded-full overflow-hidden bg-white group focus-within:ring-4 focus-within:ring-[var(--primary)]/30 transition-all">
                         <input
+                            id="search-input"
+                            name="search"
+                            autoComplete="off"
                             type="text"
                             placeholder="Search for 'Whey Protein'..."
                             value={searchQuery}
