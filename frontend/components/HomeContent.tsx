@@ -155,6 +155,7 @@ export default function HomeContent({ products }: { products: Product[] }) {
                                             original_price={product.original_price}
                                             rating={product.rating}
                                             stores={product.stores}
+                                            category={product.category}
                                         />
                                     ))}
                                 </div>

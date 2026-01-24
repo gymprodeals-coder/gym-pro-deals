@@ -35,6 +35,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
     }, [store_name, stores]);
 
     // 2. IMAGE STRATEGY (LOCAL ONLY)
+    const [hasError, setHasError] = React.useState(false);
+
     const localImageSrc = useMemo(() => {
         const cat = (category || "").toLowerCase();
         if (cat.includes("whey")) return "/images/categories/whey-protein.svg";
@@ -73,10 +75,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
             {/* IMAGE SECTION */}
             <div className="relative h-48 w-full bg-white p-6 flex items-center justify-center overflow-hidden">
                 <img
-                    src={localImageSrc}
+                    src={hasError ? "/images/categories/supplements.svg" : localImageSrc}
                     alt={category || "Product Category"}
                     loading="lazy"
                     className="object-contain h-full w-full transition-transform duration-500 group-hover:scale-105 opacity-80 group-hover:opacity-100"
+                    onError={() => setHasError(true)}
                 />
 
                 {/* Discount Badge */}
