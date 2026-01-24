@@ -3,12 +3,10 @@
 import { Dumbbell, ShoppingCart, User } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import LoginModal from "./LoginModal";
 
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isLoginOpen, setIsLoginOpen] = useState(false);
     const [isClient, setIsClient] = useState(false);
 
     // Prevent hydration mismatch by ensuring content is only rendered when client-side logic is active if needed
@@ -63,14 +61,6 @@ export default function Header() {
                             </span>
                         </button>
 
-                        <button
-                            onClick={() => setIsLoginOpen(true)}
-                            className="hidden md:flex items-center gap-2 border border-gray-700 hover:border-[var(--primary)] hover:text-[var(--primary)] text-white px-5 py-2 rounded-full text-sm font-bold transition-all"
-                        >
-                            <User size={18} />
-                            Login
-                        </button>
-
                         {/* Mobile Menu Button */}
                         <button
                             className="lg:hidden text-gray-300"
@@ -95,18 +85,10 @@ export default function Header() {
                                     {item.name}
                                 </Link>
                             ))}
-                            <button
-                                onClick={() => { setIsLoginOpen(true); setIsMenuOpen(false); }}
-                                className="mt-4 flex items-center justify-center gap-2 bg-[var(--primary)] text-white px-6 py-3 rounded-xl font-bold"
-                            >
-                                Login
-                            </button>
                         </nav>
                     </div>
                 )}
             </header>
-
-            <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
         </>
     );
 }
