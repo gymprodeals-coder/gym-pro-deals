@@ -88,9 +88,10 @@ export default function BestDealsBanner({ products }: { products: Product[] }) {
                                         href={getSearchUrl(deal.stores?.[0]?.name || "Best Deal", deal.title)}
                                         target="_blank"
                                         rel="noopener noreferrer nofollow"
-                                        className="bg-black hover:bg-[var(--primary)] text-white p-2 rounded-lg transition-colors shadow-lg shadow-black/10 group-hover:shadow-[var(--primary)]/20"
+                                        className="bg-black hover:bg-[var(--primary)] text-white px-3 py-2 rounded-lg transition-colors shadow-lg shadow-black/10 group-hover:shadow-[var(--primary)]/20 flex items-center gap-2 text-xs font-bold"
                                     >
-                                        <ExternalLink size={16} />
+                                        <span>Find on {deal.stores?.[0]?.name || "Store"}</span>
+                                        <ExternalLink size={14} />
                                     </a>
                                 </div>
                             </div>

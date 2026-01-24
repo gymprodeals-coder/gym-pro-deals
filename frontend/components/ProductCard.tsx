@@ -169,7 +169,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                                     rel="nofollow noreferrer"
                                     className="bg-black text-white text-xs font-bold px-3 py-2 rounded hover:bg-gray-800"
                                 >
-                                    Buy
+                                    Find on {store.name}
                                 </a>
                             </div>
                         ))}
