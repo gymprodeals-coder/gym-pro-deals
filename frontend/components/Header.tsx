@@ -22,8 +22,8 @@ export default function Header() {
         { name: "Home", href: "/" },
         { name: "Deals", href: "/#featured-deals" },
         { name: "Compare", href: "/#categories" },
-        { name: "About", href: "/about" },
-        { name: "Contact", href: "/#newsletter" },
+        { name: "About", href: "/#newsletter" }, // Changed to scroll to footer/newsletter for now as simple "About"
+        { name: "Contact", href: "/contact" },
     ];
 
     return (

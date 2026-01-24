@@ -3,6 +3,7 @@
 import { useState, useMemo, useDeferredValue } from "react";
 import { Search, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
+import BestDealsBanner from "./BestDealsBanner";
 import ProductCard from "./ProductCard";
 import type { Product } from "@/lib/api";
 
@@ -95,6 +96,9 @@ export default function HomeContent({ products }: { products: Product[] }) {
                 </motion.div>
             </section>
 
+            {/* ---------------- BEST DEALS BANNER ---------------- */}
+            <BestDealsBanner products={products} />
+
             {/* ---------------- MAIN CONTENT ---------------- */}
             <div className="container mx-auto px-4 py-16 space-y-20">
 
@@ -173,18 +177,89 @@ export default function HomeContent({ products }: { products: Product[] }) {
                         Join 10,000+ gym goers saving money on supplements.
                     </p>
 
-                    <form className="flex gap-2 bg-white/5 p-2 rounded-2xl border border-gray-700 focus-within:border-[var(--primary)] transition-colors">
-                        <input
-                            type="email"
-                            placeholder="you@example.com"
-                            className="flex-grow bg-transparent text-white px-4 py-3 focus:outline-none"
-                        />
-                        <button className="bg-[var(--primary)] hover:bg-pink-600 text-white font-bold px-8 py-3 rounded-xl transition-transform active:scale-95">
-                            Subscribe
-                        </button>
-                    </form>
+                    <NewsletterForm />
                 </div>
             </section>
         </main>
+    );
+}
+
+function NewsletterForm() {
+    const [email, setEmail] = useState("");
+    const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+    const [message, setMessage] = useState("");
+
+    const handleSubscribe = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        // Basic Validation
+        if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+            setStatus("error");
+            setMessage("Please enter a valid email address.");
+            return;
+        }
+
+        setStatus("loading");
+        setMessage("");
+
+        try {
+            const { db } = await import("@/lib/firebase");
+            const { collection, addDoc, query, where, getDocs, serverTimestamp } = await import("firebase/firestore");
+
+            // Check for duplicates
+            const q = query(collection(db, "subscriptions"), where("email", "==", email));
+            const querySnapshot = await getDocs(q);
+
+            if (!querySnapshot.empty) {
+                setStatus("error");
+                setMessage("You are already subscribed!");
+                return;
+            }
+
+            // Add subscription
+            await addDoc(collection(db, "subscriptions"), {
+                email,
+                createdAt: serverTimestamp()
+            });
+
+            setStatus("success");
+            setMessage("Successfully subscribed! Welcome aboard.");
+            setEmail("");
+        } catch (error) {
+            console.error("Subscription error:", error);
+            setStatus("error");
+            setMessage("Something went wrong. Please try again.");
+        }
+    };
+
+    return (
+        <div className="flex flex-col gap-4">
+            <form onSubmit={handleSubscribe} className="flex gap-2 bg-white/5 p-2 rounded-2xl border border-gray-700 focus-within:border-[var(--primary)] transition-colors">
+                <input
+                    type="email"
+                    placeholder="you@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    disabled={status === "loading" || status === "success"}
+                    className="flex-grow bg-transparent text-white px-4 py-3 focus:outline-none disabled:opacity-50"
+                />
+                <button
+                    type="submit"
+                    disabled={status === "loading" || status === "success"}
+                    className="bg-[var(--primary)] hover:bg-pink-600 text-white font-bold px-8 py-3 rounded-xl transition-transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed min-w-[140px]"
+                >
+                    {status === "loading" ? "..." : status === "success" ? "Joined!" : "Subscribe"}
+                </button>
+            </form>
+            {message && (
+                <motion.p
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`text-sm ${status === "success" ? "text-green-400" : "text-red-400"}`}
+                >
+                    {message}
+                </motion.p>
+            )}
+        </div>
     );
 }

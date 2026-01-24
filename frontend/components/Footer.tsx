@@ -22,6 +22,7 @@ export default function Footer() {
                         <li><Link href="/" className="hover:text-[var(--primary)] transition-colors">Top Deals</Link></li>
                         <li><Link href="/compare" className="hover:text-[var(--primary)] transition-colors">Compare</Link></li>
                         <li><Link href="/categories" className="hover:text-[var(--primary)] transition-colors">Categories</Link></li>
+                        <li><Link href="/contact" className="hover:text-[var(--primary)] transition-colors">Contact Us</Link></li>
                     </ul>
                 </div>
 
