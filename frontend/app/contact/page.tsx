@@ -79,16 +79,16 @@ export default function ContactPage() {
                             <h3 className="text-xl font-bold mb-6">Send us a message</h3>
                             <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-400 mb-2">Name</label>
-                                    <input type="text" placeholder="Your name" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[var(--primary)] transition-colors" />
+                                    <label htmlFor="contact-name" className="block text-sm font-medium text-gray-400 mb-2">Name</label>
+                                    <input id="contact-name" name="name" type="text" placeholder="Your name" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[var(--primary)] transition-colors" />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-400 mb-2">Email</label>
-                                    <input type="email" placeholder="you@example.com" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[var(--primary)] transition-colors" />
+                                    <label htmlFor="contact-email" className="block text-sm font-medium text-gray-400 mb-2">Email</label>
+                                    <input id="contact-email" name="email" type="email" placeholder="you@example.com" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[var(--primary)] transition-colors" />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-400 mb-2">Message</label>
-                                    <textarea rows={4} placeholder="How can we help?" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[var(--primary)] transition-colors resize-none" />
+                                    <label htmlFor="contact-message" className="block text-sm font-medium text-gray-400 mb-2">Message</label>
+                                    <textarea id="contact-message" name="message" rows={4} placeholder="How can we help?" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[var(--primary)] transition-colors resize-none" />
                                 </div>
                                 <button className="w-full bg-[var(--primary)] hover:bg-pink-600 text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-[var(--primary)]/20 flex items-center justify-center gap-2">
                                     Send Message <Send size={18} />

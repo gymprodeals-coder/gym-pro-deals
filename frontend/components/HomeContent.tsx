@@ -236,6 +236,8 @@ function NewsletterForm() {
         <div className="flex flex-col gap-4">
             <form onSubmit={handleSubscribe} className="flex gap-2 bg-white/5 p-2 rounded-2xl border border-gray-700 focus-within:border-[var(--primary)] transition-colors">
                 <input
+                    id="newsletter-email"
+                    name="email"
                     type="email"
                     placeholder="you@example.com"
                     value={email}
