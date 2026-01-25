@@ -1,22 +1,23 @@
 import Link from 'next/link';
+import { siteConfig } from '@/config/site';
 
 export default function Footer() {
     return (
         <footer className="bg-[#111111] text-gray-400 py-12 border-t border-gray-800">
             <div className="container mx-auto px-4 grid md:grid-cols-4 gap-8">
                 <div>
-                    <h3 className="text-white font-bold text-lg mb-4">GymPro Deals</h3>
+                    <h3 className="text-white font-bold text-lg mb-4">{siteConfig.name}</h3>
                     <p className="text-sm">
                         The smartest way to find the best deals on supplements across India's top stores.
                     </p>
                     <div className="mt-4 p-3 bg-gray-900 rounded-lg border border-gray-800">
                         <p className="text-xs text-gray-400 italic">
-                            GymPro Deals uses affiliate links. We may earn a commission at no extra cost to users.
+                            {siteConfig.name} uses affiliate links. We may earn a commission at no extra cost to users.
                         </p>
                     </div>
                     <div className="mt-4">
-                        <a href="mailto:gymprodeals@gmail.com" className="text-sm text-[var(--primary)] hover:underline">
-                            gymprodeals@gmail.com
+                        <a href={`mailto:${siteConfig.contact.email}`} className="text-sm text-[var(--primary)] hover:underline">
+                            {siteConfig.contact.email}
                         </a>
                     </div>
                 </div>

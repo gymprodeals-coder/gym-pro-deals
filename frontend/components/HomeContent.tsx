@@ -7,15 +7,7 @@ import BestDealsBanner from "./BestDealsBanner";
 import ProductCard from "./ProductCard";
 import type { Product } from "@/lib/api";
 
-const CATEGORY_ORDER = [
-    "Whey Protein",
-    "Creatine",
-    "Pre-Workout",
-    "BCAA",
-    "Vitamins",
-    "Mass Gainer",
-    "Supplements"
-];
+import { siteConfig } from "@/config/site";
 
 export default function HomeContent({ products }: { products: Product[] }) {
     const [searchQuery, setSearchQuery] = useState("");
@@ -69,14 +61,14 @@ export default function HomeContent({ products }: { products: Product[] }) {
                     className="relative z-10 max-w-4xl mx-auto"
                 >
                     <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight tracking-tight">
-                        Find Your Best <br />
+                        {siteConfig.hero.title.first} <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">
-                            Supplement Deals
+                            {siteConfig.hero.title.highlight}
                         </span>
                     </h1>
 
                     <p className="text-gray-400 text-lg md:text-xl mb-10 max-w-2xl mx-auto font-medium">
-                        We track prices across <span className="text-white font-bold">Amazon, Flipkart, & HealthKart</span> so you never overpay for your gains.
+                        {siteConfig.hero.subtitle}
                     </p>
 
                     {/* Search Bar */}
@@ -86,7 +78,7 @@ export default function HomeContent({ products }: { products: Product[] }) {
                             name="search"
                             autoComplete="off"
                             type="text"
-                            placeholder="Search for 'Whey Protein'..."
+                            placeholder={siteConfig.hero.searchPlaceholder}
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="w-full bg-transparent text-black placeholder-gray-500 py-4 pl-8 pr-36 text-lg font-medium focus:outline-none"
@@ -109,16 +101,16 @@ export default function HomeContent({ products }: { products: Product[] }) {
                 <section id="categories" className="scroll-mt-28">
                     <h3 className="text-lg font-bold text-gray-900 mb-4 px-2">Browse Categories</h3>
                     <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
-                        {CATEGORY_ORDER.map((cat, i) => (
+                        {siteConfig.categories.map((cat, i) => (
                             <button
                                 key={i}
                                 className="bg-white hover:bg-white text-gray-700 hover:text-[var(--primary)] font-bold py-3 px-6 rounded-xl shadow-sm hover:shadow-md border border-gray-200 hover:border-[var(--primary)] transition-all whitespace-nowrap"
                                 onClick={() => {
-                                    const el = document.getElementById(`cat-${cat}`);
+                                    const el = document.getElementById(`cat-${cat.id}`);
                                     el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
                                 }}
                             >
-                                {cat}
+                                {cat.name}
                             </button>
                         ))}
                     </div>
@@ -134,15 +126,17 @@ export default function HomeContent({ products }: { products: Product[] }) {
                     </div>
                 ) : (
                     /* ---------------- SEQUENTIAL LISTING BY CATEGORY ---------------- */
-                    CATEGORY_ORDER.map((category) => {
-                        const deals = groupedProducts[category];
+                    siteConfig.categories.map((category) => {
+                        const deals = groupedProducts[category.id];
+                        // If no deals for this exact category ID, or empty, check if we should map others or just skip
+                        // The previous logic relied on API categories matching CATEGORY_ORDER strings perfectly.
                         if (!deals || deals.length === 0) return null;
 
                         return (
-                            <section key={category} id={`cat-${category}`} className="scroll-mt-28">
+                            <section key={category.id} id={`cat-${category.id}`} className="scroll-mt-28">
                                 <div className="flex items-center justify-between mb-6 px-2">
                                     <h2 className="text-3xl font-black text-gray-900 flex items-center gap-3">
-                                        {category}
+                                        {category.name}
                                         <span className="text-sm font-medium bg-gray-200 text-gray-600 px-3 py-1 rounded-full">{deals.length} deals</span>
                                     </h2>
                                     <button className="text-[var(--primary)] font-bold text-sm flex items-center gap-1 hover:gap-2 transition-all">

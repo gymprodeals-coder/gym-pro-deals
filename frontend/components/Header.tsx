@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 
 
+import { siteConfig } from "@/config/site";
+
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isClient, setIsClient] = useState(false);
@@ -31,10 +33,10 @@ export default function Header() {
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-3 group">
                         <div className="bg-[var(--primary)] p-2 rounded-lg shadow-lg shadow-pink-500/20 group-hover:rotate-12 transition-transform duration-300">
-                            <Dumbbell className="text-white" size={24} strokeWidth={2.5} />
+                            <siteConfig.logo.icon className="text-white" size={24} strokeWidth={2.5} />
                         </div>
                         <span className="text-xl font-black text-white tracking-tight">
-                            GymPro <span className="text-[var(--primary)]">Deals</span>
+                            {siteConfig.logo.text} <span className="text-[var(--primary)]">{siteConfig.logo.highlight}</span>
                         </span>
                     </Link>
 
