@@ -68,4 +68,6 @@ export const gymProDealsConfig: SiteConfig = {
     stores: ["Amazon", "Flipkart", "HealthKart"],
 };
 
-export const siteConfig = gymProDealsConfig;
+import { beautyConfig } from './beauty';
+
+export const siteConfig = process.env.NEXT_PUBLIC_SITE_KEY === 'beauty' ? beautyConfig : gymProDealsConfig;
