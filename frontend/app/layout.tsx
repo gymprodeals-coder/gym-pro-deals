@@ -43,7 +43,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#1a1a1a] text-white`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[var(--background)] text-[var(--foreground)]`}
+        style={
+          {
+            "--primary": siteConfig.theme.primary,
+            "--background": siteConfig.theme.background,
+            "--foreground": siteConfig.theme.textPrimary,
+            "--muted-foreground": siteConfig.theme.textMuted,
+            // Add other variables if needed
+          } as React.CSSProperties
+        }
       >
         {children}
       </body>

@@ -7,7 +7,15 @@ export const beautyConfig: SiteConfig = {
     domain: "https://glowandsave.in",
     description: "Find the best deals on skincare, makeup, and beauty products from Amazon, Nykaa, & Myntra.",
     keywords: ["skincare deals", "makeup discounts", "beauty price tracker", "nykaa sale", "amazon beauty"],
-    themeColor: "#ec4899", // Pink/Rose
+    theme: {
+        primary: "#FF4D6D",
+        secondary: "#FFD6E0",
+        accent: "#FF8FA3",
+        background: "#0F0F14",
+        surface: "#16111A",
+        textPrimary: "#FFFFFF",
+        textMuted: "#CFC7CC",
+    },
     logo: {
         text: "Glow &",
         highlight: "Save",

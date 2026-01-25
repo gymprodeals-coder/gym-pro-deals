@@ -8,12 +8,22 @@ export interface CategoryConfig {
     icon: any; // Lucide icon type or string key if we map it later
 }
 
+export interface ThemeConfig {
+    primary: string;
+    secondary?: string;
+    accent?: string;
+    background: string;
+    surface?: string; // For cards or alternate backgrounds
+    textPrimary: string;
+    textMuted: string;
+}
+
 export interface SiteConfig {
     name: string;
     domain: string;
     description: string;
     keywords: string[];
-    themeColor: string;
+    theme: ThemeConfig;
     logo: {
         text: string;
         highlight: string;
@@ -39,7 +49,13 @@ export const gymProDealsConfig: SiteConfig = {
     domain: "https://gymprodeals.in",
     description: "Compare prices for Whey Protein, Creatine, and Gym Gear from Amazon, Flipkart & HealthKart. Track price drops and save money on your gains.",
     keywords: ["gym deals", "whey protein price", "creatine price", "supplement offers", "gym gear india", "price tracker"],
-    themeColor: "#ff3366", // Current primary color
+    theme: {
+        primary: "#ff3366",
+        secondary: "#FFD6E0", // Placeholder/unused in gympro currently but needed for interface
+        background: "#0a0a0a",
+        textPrimary: "#ffffff",
+        textMuted: "#9ca3af", // tailwind gray-400 roughly
+    },
     logo: {
         text: "GymPro",
         highlight: "Deals",
