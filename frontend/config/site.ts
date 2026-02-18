@@ -86,4 +86,9 @@ export const gymProDealsConfig: SiteConfig = {
 
 import { beautyConfig } from './beauty';
 
-export const siteConfig = process.env.NEXT_PUBLIC_SITE_KEY === 'beauty' ? beautyConfig : gymProDealsConfig;
+
+
+export function getSiteConfig(): SiteConfig {
+    return process.env.NEXT_PUBLIC_SITE_KEY === 'beauty' ? beautyConfig : gymProDealsConfig;
+}
+

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { GoogleAnalytics } from '@next/third-parties/google';
 import "./globals.css";
 
-import { siteConfig } from "@/config/site";
+import { getSiteConfig } from "@/config/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,25 +15,27 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: `${siteConfig.name} | Best Price Supplement Price Tracker in India`,
-  description: siteConfig.description,
-  keywords: siteConfig.keywords,
-  authors: [{ name: siteConfig.name }],
-  openGraph: {
-    title: `${siteConfig.name} - Save on Supplements`,
+export async function generateMetadata(): Promise<Metadata> {
+  const siteConfig = getSiteConfig();
+  return {
+    title: `${siteConfig.name} | Best Price Supplement Price Tracker in India`,
     description: siteConfig.description,
-    url: siteConfig.domain,
-    siteName: siteConfig.name,
-    locale: "en_IN",
-    type: "website",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  }
-};
-
+    keywords: siteConfig.keywords,
+    authors: [{ name: siteConfig.name }],
+    openGraph: {
+      title: `${siteConfig.name} - Save on Supplements`,
+      description: siteConfig.description,
+      url: siteConfig.domain,
+      siteName: siteConfig.name,
+      locale: "en_IN",
+      type: "website",
+    },
+    robots: {
+      index: true,
+      follow: true,
+    }
+  };
+}
 
 
 export default function RootLayout({
@@ -40,6 +43,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const siteConfig = getSiteConfig();
   return (
     <html lang="en">
       <body
@@ -50,11 +54,11 @@ export default function RootLayout({
             "--background": siteConfig.theme.background,
             "--foreground": siteConfig.theme.textPrimary,
             "--muted-foreground": siteConfig.theme.textMuted,
-            // Add other variables if needed
           } as React.CSSProperties
         }
       >
         {children}
+        <GoogleAnalytics gaId="G-YSFKDYV8W7" />
       </body>
     </html>
   );

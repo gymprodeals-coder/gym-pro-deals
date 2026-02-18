@@ -2,14 +2,18 @@ import type { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
-import { siteConfig } from '@/config/site';
+import { getSiteConfig } from '@/config/site';
 
-export const metadata: Metadata = {
-    title: `Categories | ${siteConfig.name}`,
-    description: siteConfig.description,
-};
+export async function generateMetadata(): Promise<Metadata> {
+    const siteConfig = getSiteConfig();
+    return {
+        title: `Categories | ${siteConfig.name}`,
+        description: siteConfig.description,
+    };
+}
 
 export default function CategoriesPage() {
+    const siteConfig = getSiteConfig();
     return (
         <>
             <Header />

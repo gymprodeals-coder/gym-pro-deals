@@ -1,7 +1,8 @@
 import Link from 'next/link';
-import { siteConfig } from '@/config/site';
+import { getSiteConfig } from '@/config/site';
 
 export default function Footer() {
+    const siteConfig = getSiteConfig();
     return (
         <footer className="bg-[#111111] text-gray-400 py-12 border-t border-gray-800">
             <div className="container mx-auto px-4 grid md:grid-cols-4 gap-8">

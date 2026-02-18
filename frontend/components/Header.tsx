@@ -5,9 +5,10 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 
 
-import { siteConfig } from "@/config/site";
+import { getSiteConfig } from "@/config/site";
 
 export default function Header() {
+    const siteConfig = getSiteConfig();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isClient, setIsClient] = useState(false);
 

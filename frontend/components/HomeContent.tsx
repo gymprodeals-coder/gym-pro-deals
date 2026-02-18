@@ -7,9 +7,10 @@ import BestDealsBanner from "./BestDealsBanner";
 import ProductCard from "./ProductCard";
 import type { Product } from "@/lib/api";
 
-import { siteConfig } from "@/config/site";
+import { getSiteConfig } from "@/config/site";
 
 export default function HomeContent({ products }: { products: Product[] }) {
+    const siteConfig = getSiteConfig();
     const [searchQuery, setSearchQuery] = useState("");
     const deferredSearchQuery = useDeferredValue(searchQuery);
 
