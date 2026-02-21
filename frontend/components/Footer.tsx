@@ -13,13 +13,16 @@ export default function Footer() {
                     </p>
                     <div className="mt-4 p-3 bg-gray-900 rounded-lg border border-gray-800">
                         <p className="text-xs text-gray-400 italic">
-                            {siteConfig.name} uses affiliate links. We may earn a commission at no extra cost to users.
+                            GymProDeals participates in affiliate marketing programs and may earn commissions from qualifying purchases.
                         </p>
                     </div>
-                    <div className="mt-4">
-                        <a href={`mailto:${siteConfig.contact.email}`} className="text-sm text-[var(--primary)] hover:underline">
-                            {siteConfig.contact.email}
-                        </a>
+                    <div className="mt-6">
+                        <p className="text-sm text-gray-400 mb-1 font-medium">
+                            Official Publisher Email:{' '}
+                            <a href={`mailto:${siteConfig.contact.email}`} className="text-[var(--primary)] hover:underline">
+                                {siteConfig.contact.email}
+                            </a>
+                        </p>
                     </div>
                 </div>
 

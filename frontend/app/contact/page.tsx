@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { Mail, ArrowLeft, Send } from "lucide-react";
 
+import Footer from "@/components/Footer";
+
 export default function ContactPage() {
     return (
         <main className="min-h-screen bg-black text-white relative overflow-hidden">
@@ -36,16 +38,21 @@ export default function ContactPage() {
                                 <div className="bg-[var(--primary)]/20 w-12 h-12 rounded-xl flex items-center justify-center mb-4">
                                     <Mail className="text-[var(--primary)]" size={24} />
                                 </div>
-                                <h3 className="text-xl font-bold mb-2">Email Support</h3>
-                                <p className="text-gray-400 mb-4">
-                                    For all inquiries, please email us directly. We aim to respond within 24 hours.
+                                <h3 className="text-xl font-bold mb-2">Email Support & Business Inquiries</h3>
+                                <p className="text-gray-400 mb-6">
+                                    For all general inquiries, partnerships, or business matters, please email us directly. We aim to respond within 24 hours.
                                 </p>
-                                <a
-                                    href="mailto:gymprodeals@gmail.com"
-                                    className="text-white font-bold text-lg hover:text-[var(--primary)] transition-colors"
-                                >
-                                    gymprodeals@gmail.com
-                                </a>
+                                <div className="space-y-1">
+                                    <p className="text-sm text-gray-400 font-medium">
+                                        Official Publisher Email:
+                                    </p>
+                                    <a
+                                        href="mailto:vengateshwaranpalaniyappa@gmail.com"
+                                        className="text-white font-bold text-lg hover:text-[var(--primary)] transition-colors inline-block"
+                                    >
+                                        vengateshwaranpalaniyappa@gmail.com
+                                    </a>
+                                </div>
                             </div>
 
                             <div className="p-8 rounded-3xl border border-white/5 bg-black/50">
@@ -93,6 +100,7 @@ export default function ContactPage() {
                     </div>
                 </div>
             </div>
+            <Footer />
         </main>
     );
 }

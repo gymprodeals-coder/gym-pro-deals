@@ -79,7 +79,7 @@ export const gymProDealsConfig: SiteConfig = {
         { name: "Supplements", icon: Pill, description: "General health and fitness supplements", id: "Supplements" },
     ],
     contact: {
-        email: "gymprodeals@gmail.com",
+        email: "vengateshwaranpalaniyappa@gmail.com",
     },
     stores: ["Amazon", "Flipkart", "HealthKart"],
 };
