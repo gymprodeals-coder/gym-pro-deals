@@ -1,0 +1,46 @@
+[
+    {
+        "id": 1,
+        "name": "Optimum Nutrition (ON) Gold Standard 100% Whey",
+        "image": "https://m.media-amazon.com/images/I/716uH6rW-4L._SX679_.jpg",
+        "description": "24g Blended Protein, 5.5g BCAAs, Primary Source Whey Protein Isolate",
+        "amazonLink": "https://www.amazon.in/dp/B002DYIZH6",
+        "flipkartLink": "https://www.flipkart.com/dp/B002DYIZH6",
+        "healthkartLink": "https://www.healthkart.com/dp/B002DYIZH6",
+        "category": "Whey",
+        "lastUpdated": "2026-02-23"
+    },
+    {
+        "id": 2,
+        "name": "MuscleBlaze Biozyme Performance Whey",
+        "image": "https://m.media-amazon.com/images/I/61KjL7NFR-L._SX679_.jpg",
+        "description": "EAF, 25g Protein, 11.75g EAA, 5.51g BCAA",
+        "amazonLink": "https://www.amazon.in/dp/B08P1QFTD7",
+        "flipkartLink": "https://www.flipkart.com/dp/B08P1QFTD7",
+        "healthkartLink": "https://www.healthkart.com/dp/B08P1QFTD7",
+        "category": "Whey",
+        "lastUpdated": "2026-02-23"
+    },
+    {
+        "id": 3,
+        "name": "MuscleTech Platinum 100% Creatine",
+        "image": "https://m.media-amazon.com/images/I/61n+0mH13AL._SX679_.jpg",
+        "description": "Pure Monohydrate, Increases Strength, Muscle Builders",
+        "amazonLink": "https://www.amazon.in/dp/B00IUHNCIW",
+        "flipkartLink": "https://www.flipkart.com/dp/B00IUHNCIW",
+        "healthkartLink": "https://www.healthkart.com/dp/B00IUHNCIW",
+        "category": "Creatine",
+        "lastUpdated": "2026-02-23"
+    },
+    {
+        "id": 4,
+        "name": "Cellucor C4 Original Pre Workout",
+        "image": "https://m.media-amazon.com/images/I/71M39iN4BQL._SX679_.jpg",
+        "description": "Explosive Energy, Vitamin C, Beta Alanine",
+        "amazonLink": "https://www.amazon.in/dp/B00U4O4IFA",
+        "flipkartLink": "https://www.flipkart.com/dp/B00U4O4IFA",
+        "healthkartLink": "https://www.healthkart.com/dp/B00U4O4IFA",
+        "category": "Pre Workout",
+        "lastUpdated": "2026-02-23"
+    }
+]

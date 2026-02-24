@@ -26,7 +26,7 @@ export default function HomeContent({ products }: { products: Product[] }) {
             // Guard against null/undefined product
             if (!p) return false;
             // Safe title access
-            const title = p.title || "";
+            const title = p.name || "";
             return title.toLowerCase().includes(deferredSearchQuery.toLowerCase());
         });
 
@@ -37,16 +37,11 @@ export default function HomeContent({ products }: { products: Product[] }) {
             groups[cat].push(product);
         });
 
-        // 3. Sort within groups by Price (Lowest First)
-        Object.keys(groups).forEach(cat => {
-            groups[cat].sort((a, b) => (a.price || 0) - (b.price || 0));
-        });
-
         return groups;
     }, [products, deferredSearchQuery]);
 
     return (
-        <main className="min-h-screen bg-gray-100">
+        <main className="min-h-screen bg-[#0a0a0a]">
 
             {/* ---------------- HERO SECTION ---------------- */}
             <section className="relative bg-[#0a0a0a] pt-32 pb-24 flex flex-col items-center text-center px-4 overflow-hidden rounded-b-[3rem] shadow-2xl z-10">
@@ -73,7 +68,7 @@ export default function HomeContent({ products }: { products: Product[] }) {
                     </p>
 
                     {/* Search Bar */}
-                    <div className="relative max-w-2xl mx-auto flex shadow-2xl rounded-full overflow-hidden bg-white group focus-within:ring-4 focus-within:ring-[var(--primary)]/30 transition-all">
+                    <div className="relative max-w-2xl mx-auto flex shadow-2xl rounded-full overflow-hidden bg-[#111] border border-gray-800 group focus-within:ring-2 focus-within:ring-[var(--primary)] transition-all">
                         <input
                             id="search-input"
                             name="search"
@@ -82,7 +77,7 @@ export default function HomeContent({ products }: { products: Product[] }) {
                             placeholder={siteConfig.hero.searchPlaceholder}
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full bg-transparent text-black placeholder-gray-500 py-4 pl-8 pr-36 text-lg font-medium focus:outline-none"
+                            className="w-full bg-transparent text-white placeholder-gray-500 py-4 pl-8 pr-36 text-lg font-medium focus:outline-none"
                         />
                         <button className="absolute right-1.5 top-1.5 bottom-1.5 bg-[var(--primary)] hover:bg-pink-600 text-white font-bold px-8 rounded-full transition-all flex items-center justify-center gap-2">
                             <Search size={20} strokeWidth={3} />
@@ -100,12 +95,12 @@ export default function HomeContent({ products }: { products: Product[] }) {
 
                 {/* Categories Strip */}
                 <section id="categories" className="scroll-mt-28">
-                    <h3 className="text-lg font-bold text-gray-900 mb-4 px-2">Browse Categories</h3>
+                    <h3 className="text-lg font-bold text-gray-400 mb-4 px-2">Browse Categories</h3>
                     <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
                         {siteConfig.categories.map((cat, i) => (
                             <button
                                 key={i}
-                                className="bg-white hover:bg-white text-gray-700 hover:text-[var(--primary)] font-bold py-3 px-6 rounded-xl shadow-sm hover:shadow-md border border-gray-200 hover:border-[var(--primary)] transition-all whitespace-nowrap"
+                                className="bg-[#111] hover:bg-gray-800 text-gray-300 hover:text-white font-bold py-3 px-6 rounded-xl shadow-sm hover:shadow-md border border-gray-800 hover:border-gray-700 transition-all whitespace-nowrap"
                                 onClick={() => {
                                     const el = document.getElementById(`cat-${cat.id}`);
                                     el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -136,9 +131,9 @@ export default function HomeContent({ products }: { products: Product[] }) {
                         return (
                             <section key={category.id} id={`cat-${category.id}`} className="scroll-mt-28">
                                 <div className="flex items-center justify-between mb-6 px-2">
-                                    <h2 className="text-3xl font-black text-gray-900 flex items-center gap-3">
+                                    <h2 className="text-3xl font-black text-white flex items-center gap-3">
                                         {category.name}
-                                        <span className="text-sm font-medium bg-gray-200 text-gray-600 px-3 py-1 rounded-full">{deals.length} deals</span>
+                                        <span className="text-sm font-medium bg-[#111] border border-gray-800 text-gray-400 px-3 py-1 rounded-full">{deals.length} deals</span>
                                     </h2>
                                     <button className="text-[var(--primary)] font-bold text-sm flex items-center gap-1 hover:gap-2 transition-all">
                                         View All <ChevronRight size={16} />
@@ -149,15 +144,7 @@ export default function HomeContent({ products }: { products: Product[] }) {
                                     {deals.map((product, idx) => (
                                         <ProductCard
                                             key={product.id || `p-${idx}`}
-                                            id={product.id}
-                                            title={product.title}
-                                            brand={product.brand}
-                                            image_url={product.image_url}
-                                            price={product.price}
-                                            original_price={product.original_price}
-                                            rating={product.rating}
-                                            stores={product.stores}
-                                            category={product.category}
+                                            {...product}
                                         />
                                     ))}
                                 </div>
@@ -167,7 +154,6 @@ export default function HomeContent({ products }: { products: Product[] }) {
                 )}
             </div>
 
-            {/* ---------------- NEWSLETTER ---------------- */}
             {/* ---------------- NEWSLETTER ---------------- */}
             <section id="newsletter" className="bg-[#111] py-20 text-center relative overflow-hidden mt-20 border-t border-gray-800 scroll-mt-28">
                 <div className="relative z-10 container mx-auto px-4 max-w-2xl">
