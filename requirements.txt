@@ -1,8 +1,0 @@
-fastapi
-uvicorn
-gunicorn
-requests
-playwright
-sqlalchemy
-python-multipart
-# Add any other dependencies here

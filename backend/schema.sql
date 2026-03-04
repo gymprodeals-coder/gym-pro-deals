@@ -1,0 +1,27 @@
+CREATE TABLE IF NOT EXISTS products (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  slug VARCHAR(255) UNIQUE,
+  image TEXT,
+  description TEXT,
+  category VARCHAR(100),
+  amazonLink TEXT,
+  flipkartLink TEXT,
+  healthkartLink TEXT,
+  price DECIMAL(10,2),
+  clicks INT DEFAULT 0,
+  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS admins (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(255) UNIQUE,
+  password VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS click_logs (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  productId INT,
+  store VARCHAR(50),
+  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

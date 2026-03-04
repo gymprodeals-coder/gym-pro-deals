@@ -1,31 +1,16 @@
-import type { Metadata } from 'next';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-
-export const metadata: Metadata = {
-    title: 'About | GymPro Deals',
-    description: 'About GymPro Deals and its mission to help fitness enthusiasts.',
-};
-
 export default function AboutPage() {
     return (
-        <>
-            <Header />
-            <main className="min-h-screen bg-gray-50 text-gray-900 pt-10 pb-20">
-                <div className="container mx-auto px-4 max-w-3xl">
-                    <h1 className="text-4xl font-black mb-8 border-b-4 border-[var(--primary)] inline-block pb-2">About GymPro Deals</h1>
-
-                    <div className="space-y-6 text-lg leading-relaxed">
-                        <p>
-                            GymPro Deals is an independent project built and maintained by Vengateshwaran to help fitness enthusiasts find the best supplement deals across trusted platforms.
-                        </p>
-                        <p>
-                            We believe that staying fit shouldn't break the bank. By aggregating prices from major retailers like Amazon, Flipkart, and HealthKart, we ensure you always get the best price on your whey protein, creatine, and other essentials.
-                        </p>
-                    </div>
-                </div>
-            </main>
-            <Footer />
-        </>
+        <div className="container py-5">
+            <h1 className="text-warning fw-bold mb-4">About GymProDeals</h1>
+            <p className="fs-5 text-light">
+                GymProDeals is your ultimate destination for finding the best discounts and top deals on
+                premium fitness equipment, supplements, and gear. We aggregate offers from top stores like Amazon,
+                Flipkart, and Healthkart so that you can achieve your fitness goals without breaking the bank.
+            </p>
+            <p className="fs-5 text-light">
+                Our team of fitness enthusiasts continuously scours the web to bring you the highest quality products
+                at the lowest prices.
+            </p>
+        </div>
     );
 }
